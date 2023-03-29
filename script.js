@@ -23,7 +23,7 @@ function initLorenzSystem() {
 
 function draw() {
     translate(width / 2, height / 2, -width / 2);
-    scale(width / 150); // Adjust this value to control the size
+    scale(width / 75); // Adjust this value to control the size
     rotateX(PI / 4);
 
     let dt = 0.01;

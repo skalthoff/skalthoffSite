@@ -33,3 +33,34 @@ h1, h2, h3, h4, h5, h6 {
 p {
     line-height: 1.6;
 }
+
+.links-section {
+    background-color: #f3f3f3;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.links-section h2 {
+    margin-bottom: 10px;
+}
+
+.links-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.links-section ul li {
+    margin-bottom: 10px;
+}
+
+.links-section ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+}
+
+.links-section ul li a:hover {
+    color: #007bff;
+}
