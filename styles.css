@@ -24,7 +24,6 @@ canvas {
     left: 50%;
     transform: translate(-50%, -50%);
 }
-        
 
 h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
@@ -63,4 +62,21 @@ p {
 
 .links-section ul li a:hover {
     color: #007bff;
+}
+
+/* Media Query for Mobile Devices */
+@media screen and (max-width: 600px) {
+    .container {
+        max-width: 90%;
+        margin: 20px auto;
+        padding: 40px 20px;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-size: 1.2em;
+    }
+
+    p {
+        font-size: 0.9em;
+    }
 }
