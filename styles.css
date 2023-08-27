@@ -1,11 +1,19 @@
-body {
+/* Reset some default browser styles */
+body, h1, h2, h3, ul, p {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    color: #333;
-    background-color: #000; /* Changed from 'transparent' to '#000' */
 }
 
+/* Add a background color to the whole page */
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(53, 53, 53, 1) 50%, rgba(0, 0, 0, 1) 100%);
+    overflow-x: hidden;
+}
+
+/* Style the canvas */
 canvas {
     position: absolute;
     top: 0;
@@ -13,58 +21,68 @@ canvas {
     z-index: -1;
 }
 
+/* Container styling */
 .container {
-    max-width: 960px;
-    margin: 2em auto;
-    padding: 60px 20px;
-    background-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    max-width: 1100px;
+    margin: 3em auto;
+    padding: 2em 3em;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
+/* Heading Styles */
 h1, h2, h3, h4, h5, h6 {
-    margin-top: 0;
+    margin-bottom: 1em;
+    font-weight: 700;
+    color: #444;
 }
 
+/* Paragraph Style */
 p {
-    line-height: 1.6;
+    margin-bottom: 1.5em;
+    font-size: 1.1em;
+    line-height: 1.7;
 }
 
+/* Links Section */
 .links-section {
-    background-color: #f3f3f3;
-    padding: 20px;
-    margin-top: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fafafa;
+    padding: 1.5em;
+    margin-top: 2em;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .links-section h2 {
-    margin-bottom: 10px;
+    margin-bottom: 1em;
+    font-size: 1.4em;
 }
 
 .links-section ul {
-    list-style-type: none;
+    list-style: none;
+    margin: 0;
     padding: 0;
 }
 
 .links-section ul li {
-    margin-bottom: 10px;
+    margin-bottom: 1em;
 }
 
 .links-section ul li a {
     text-decoration: none;
-    color: #333;
+    color: #007bff;
     font-weight: 600;
 }
 
 .links-section ul li a:hover {
-    color: #007bff;
+    color: #0056b3;
 }
 
-/* Media Query for Mobile Devices */
-@media screen and (max-width: 600px) {
+/* Responsive design */
+@media (max-width: 768px) {
     .container {
-        max-width: 90%;
-        padding: 40px 10px;
+        padding: 2em 1em;
     }
 
     h1, h2, h3, h4, h5, h6 {
@@ -72,6 +90,6 @@ p {
     }
 
     p {
-        font-size: 0.9em;
+        font-size: 1em;
     }
 }
