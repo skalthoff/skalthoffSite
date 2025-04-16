@@ -10,15 +10,33 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
     <script src="lorenz.js" defer></script>
+    <!-- 1) Modern font & smooth scrolling -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>html {scroll-behavior: smooth;}</style>
 </head>
 <body>
+    <!-- 2) Sticky navigation bar -->
+    <nav class="site-nav">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#philosophy">Philosophy</a></li>
+        <li><a href="#interests">Interests</a></li>
+        <li><a href="#projects">Projects</a></li>
+      </ul>
+    </nav>
+
     <div class="container">
+      <section id="about">
         <h1>Tech Mischief & Social Good Enthusiast</h1>
         <p>Welcome! I'm passionate about harnessing technology both for playful mischief and meaningful societal improvements. Driven by curiosity and creativity, my projects range from quirky experiments to innovative solutions aimed at enhancing community engagement and social impact.</p>
-        
+      </section>
+      
+      <section id="philosophy">
         <h2>Philosophy</h2>
         <p>I believe technology should be both playful and powerful, capable of challenging norms, sparking conversations, and creating positive change. Balancing a spirit of mischief with responsibility and empathy, I strive to ensure my projects benefit society in meaningful and unexpected ways.</p>
+      </section>
 
+      <section id="interests">
         <h2>Interests & Expertise</h2>
         <ul>
             <li>Creative coding & experimental projects</li>
@@ -26,16 +44,17 @@
             <li>Interactive web experiences</li>
             <li>Community-driven technology initiatives</li>
         </ul>
+      </section>
 
-        <div class="links-section">
-            <h2>Projects & Playgrounds</h2>
-            <ul>
-                <li><a href="https://github.com/skalthoff" target="_blank">GitHub Projects</a></li>
-                <li><a href="/imagePixelator/index.html">Image Pixelator</a> – Playfully pixelate your images</li>
-                <li><a href="https://digits.skalthoff.com">Digits Solver</a> – A mischievous solver for puzzles from The New York Times</li>
-                <li><a href="/playground/raystuff/improved.html">UX Playground</a> – Demoing delightfully terrible user experiences</li>
-            </ul>
-        </div>
+      <section id="projects" class="links-section">
+        <h2>Projects & Playgrounds</h2>
+        <ul>
+            <li><a href="https://github.com/skalthoff" target="_blank">GitHub Projects</a></li>
+            <li><a href="/imagePixelator/index.html">Image Pixelator</a> – Playfully pixelate your images</li>
+            <li><a href="https://digits.skalthoff.com">Digits Solver</a> – A mischievous solver for puzzles from The New York Times</li>
+            <li><a href="/playground/raystuff/improved.html">UX Playground</a> – Demoing delightfully terrible user experiences</li>
+        </ul>
+      </section>
     </div>
 </body>
 </html>
