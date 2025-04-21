@@ -1,20 +1,300 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Unfriendly Interface</title>
-    <link rel="stylesheet" href="styles.css">
-    
+  <meta charset="UTF-8"/>
+  <title>Aggravating UX Demo Form</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 2rem;
+    }
+    fieldset { margin-bottom: 1.5rem; }
+    label { display: block; margin: 0.5rem 0; }
+
+    /* 1) Dropdown: open on hover, tiny targets, shuffle on close */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+      width: 150px;
+    }
+    .dropdown-toggle {
+      width: 100%; padding: 0.25rem; background: #eee; cursor: pointer;
+    }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%; left: 0;
+      width: 100%;
+      background: white;
+      border: 1px solid #ccc;
+      font-size: 0.85rem;
+    }
+    .dropdown-menu div {
+      padding: 0.25rem; height: 1.5rem; line-height:1.5rem;
+      cursor: pointer;
+    }
+    .dropdown:hover .dropdown-menu { display: block; }
+
+    /* 2) Date‑picker reset on blur */
+    #date { padding: 0.25rem; }
+
+    /* 3) Modal: no close, trap focus */
+    #modal {
+      display: none;
+      position: fixed; top:0; left:0; width:100%; height:100%;
+      background: rgba(0,0,0,0.5);
+    }
+    #modal .dialog {
+      background: white; padding:1rem; width:300px; margin:10% auto;
+    }
+
+    /* 4) Autocomplete: flicker wrong suggestions */
+    #ac-results {
+      position: absolute; background:white; border:1px solid #ccc;
+      width: 200px; font-size:0.9rem;
+    }
+    #ac-results div { padding:0.25rem; }
+
+    /* 5) Tabs: activate on hover with delay+spinner */
+    .tabs { display:flex; border-bottom:1px solid #ccc; }
+    .tab {
+      padding: 0.5rem 1rem; cursor: pointer; position: relative;
+    }
+    .tab .spinner {
+      position:absolute; right:0.25rem; top:50%; width:0.8rem; height:0.8rem;
+      margin-top:-0.4rem; border:2px solid #999; border-top-color:transparent;
+      border-radius:50%; display:none;
+      animation: spin 0.8s linear infinite;
+    }
+    .tab-content { display:none; padding:0.5rem; }
+    .tab.active .spinner { display:block; }
+
+    @keyframes spin { to { transform:rotate(360deg);} }
+
+    /* 6) Progress bar: jump backwards */
+    #progress { width: 100%; background:#eee; height:1rem; margin-top:0.5rem; }
+    #progress .fill { width:0%; height:100%; background:#4caf50; }
+
+    /* 7) Checkbox: require dblclick */
+    /* (we’ll prevent single-click in JS) */
+
+    /* 8) File upload: reject lowercase ext */
+    /* (handled in JS) */
+
+    /* 9) Tooltip: 1s delay, disappear on move */
+    [data-tooltip] { position: relative; cursor: help; }
+    .tooltip {
+      position:absolute; padding:0.3rem; background:#333; color:white;
+      font-size:0.8rem; border-radius:3px; pointer-events:none;
+    }
+
+    /* 10) Pagination: Next only on 2px-bottom hover */
+    .pagination { display:flex; gap:0.5rem; margin-top:1rem; position:relative; }
+    .pagination button { padding:0.3rem 0.6rem; }
+    .pagination .next { display:none; }
+    .pagination .sensor {
+      position:absolute; bottom:0; left:0; width:100%; height:2px;
+    }
+    .pagination .sensor:hover ~ .next { display:inline-block; }
+  </style>
 </head>
 <body>
-    <div id="canvas-container">
-        <canvas id="canvas"></canvas>
-        <div id="slider" data-tilt data-tilt-glare="true" data-tilt-transition="true" data-tilt-scale="1.1"></div>
-        <button id="left-button">Left</button>
-        <button id="right-button">Right</button>
-    </div>
+  <form>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.14.2/matter.min.js"></script>
-    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/130527/vanilla-tilt.min.js"></script>
-    <script src="physicsSlider.js"></script>
+    <!-- 1) Dropdown -->
+    <fieldset>
+      <legend>Choose your poison</legend>
+      <div class="dropdown" id="role-dd">
+        <div class="dropdown-toggle">Select role…</div>
+        <div class="dropdown-menu"></div>
+      </div>
+    </fieldset>
+
+    <!-- 2) Date reset -->
+    <fieldset>
+      <label for="date">Pick a date:</label>
+      <input type="date" id="date"/>
+    </fieldset>
+
+    <!-- 3) Modal trigger -->
+    <button type="button" id="open-modal">Show Terms (can’t close!)</button>
+
+    <!-- 4) Autocomplete -->
+    <fieldset style="position:relative;">
+      <label for="search">Search:</label>
+      <input id="search" autocomplete="off"/>
+      <div id="ac-results"></div>
+    </fieldset>
+
+    <!-- 5) Tabs -->
+    <div class="tabs">
+      <div class="tab" data-target="t1">Tab 1<div class="spinner"></div></div>
+      <div class="tab" data-target="t2">Tab 2<div class="spinner"></div></div>
+    </div>
+    <div id="t1" class="tab-content">Content #1</div>
+    <div id="t2" class="tab-content">Content #2</div>
+
+    <!-- 6) Progress & submit -->
+    <button type="button" id="submit">Submit (maybe)</button>
+    <div id="progress"><div class="fill"></div></div>
+
+    <!-- 7) Checkbox dblclick -->
+    <fieldset>
+      <label><input type="checkbox" id="agree"/> I agree</label>
+    </fieldset>
+
+    <!-- 8) File upload -->
+    <fieldset>
+      <label>Upload file:</label>
+      <input type="file" id="file"/>
+    </fieldset>
+
+    <!-- 9) Tooltip -->
+    <p data-tooltip="This tooltip is impossible to actually read!">
+      Hover here for tips…
+    </p>
+
+    <!-- 10) Pagination -->
+    <div class="pagination">
+      <button>1</button><button>2</button><button>3</button>
+      <div class="sensor"></div>
+      <button class="next">Next »</button>
+    </div>
+  </form>
+
+  <!-- 3) Modal -->
+  <div id="modal" tabindex="-1">
+    <div class="dialog">These are the terms of service. Good luck closing me!</div>
+  </div>
+
+  <script>
+  // 1) populate & shuffle dropdown
+  const roles = ['Admin','Editor','Viewer','Guest'];
+  const ddMenu = document.querySelector('#role-dd .dropdown-menu');
+  function shuffle() { roles.sort(()=>Math.random()-0.5); renderDD(); }
+  function renderDD(){
+    ddMenu.innerHTML = '';
+    roles.forEach(r=>{
+      const d = document.createElement('div');
+      d.textContent = r;
+      d.onclick = ()=> alert('You picked '+r);
+      ddMenu.appendChild(d);
+    });
+  }
+  renderDD();
+  document.querySelector('.dropdown').addEventListener('mouseleave', shuffle);
+
+  // 2) date picker resets to today on blur
+  const date = document.getElementById('date');
+  date.addEventListener('blur', ()=> {
+    const t = new Date().toISOString().slice(0,10);
+    date.value = t;
+  });
+
+  // 3) modal trap focus / can’t close
+  const modal = document.getElementById('modal');
+  document.getElementById('open-modal')
+    .onclick = ()=> modal.style.display='block';
+  modal.addEventListener('keydown', e=> {
+    // trap Tab/Esc
+    if (e.key==='Escape' || e.key==='Tab') e.preventDefault();
+  });
+  modal.focus();
+
+  // 4) autocomplete flicker
+  const ac = document.getElementById('search');
+  const acRes = document.getElementById('ac-results');
+  const sample = ['apple','banana','cherry','date'];
+  ac.addEventListener('input', ()=>{
+    acRes.innerHTML = '';
+    const term = ac.value.toLowerCase();
+    const correct = sample.filter(x=>x.startsWith(term));
+    // show wrong suggestions quickly
+    const wrong = ['xyz','123','nope'], seq=[...wrong, ...correct];
+    seq.forEach((s,i)=>{
+      setTimeout(()=>{
+        acRes.innerHTML = '';
+        const d = document.createElement('div');
+        d.textContent = s;
+        acRes.appendChild(d);
+      }, i*200);
+    });
+  });
+
+  // hide on click away
+  document.addEventListener('click', e=>{
+    if (!ac.contains(e.target)) acRes.innerHTML='';
+  });
+
+  // 5) tabs hover with delay+spinner
+  document.querySelectorAll('.tab').forEach(tab=>{
+    let timer;
+    tab.addEventListener('mouseenter', ()=>{
+      timer = setTimeout(()=>{
+        // activate
+        document.querySelectorAll('.tab, .tab-content')
+          .forEach(el=>el.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.target)
+          .classList.add('active');
+      }, 500);
+    });
+    tab.addEventListener('mouseleave', ()=>{
+      clearTimeout(timer);
+      tab.classList.remove('active');
+      document.getElementById(tab.dataset.target)
+        .classList.remove('active');
+    });
+  });
+
+  // 6) progress bar jumps backward
+  const fill = document.querySelector('.fill');
+  document.getElementById('submit').onclick = ()=>{
+    let p = 0;
+    const iv = setInterval(()=>{
+      if (p>=100) return clearInterval(iv);
+      p += 10;
+      if (Math.random()<0.3) p = Math.max(0,p-10);
+      fill.style.width = p+'%';
+    }, 300);
+  };
+
+  // 7) checkbox dblclick
+  const chk = document.getElementById('agree');
+  chk.addEventListener('click', e=> e.preventDefault());
+  chk.addEventListener('dblclick', ()=> chk.checked = !chk.checked);
+
+  // 8) file upload reject lowercase
+  document.getElementById('file').addEventListener('change', e=>{
+    const f = e.target.files[0];
+    if (f && /\.(png|jpg|gif)$/.test(f.name)) {
+      alert('Please rename to .PNG/.JPG/.GIF');
+      e.target.value = '';
+    }
+  });
+
+  // 9) tooltip delay + hide on move
+  document.querySelectorAll('[data-tooltip]').forEach(el=>{
+    let tt, tip;
+    el.addEventListener('mouseover', ()=>{
+      tt = setTimeout(()=>{
+        tip = document.createElement('div');
+        tip.className='tooltip';
+        tip.textContent = el.dataset.tooltip;
+        el.appendChild(tip);
+      }, 1000);
+    });
+    el.addEventListener('mousemove', ()=>{
+      clearTimeout(tt);
+      if (tip) tip.remove();
+    });
+    el.addEventListener('mouseout', ()=> {
+      clearTimeout(tt);
+      if (tip) tip.remove();
+    });
+  });
+
+  // 10) pagination sensor → handled by CSS
+  </script>
 </body>
 </html>
